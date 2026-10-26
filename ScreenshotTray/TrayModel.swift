@@ -2,6 +2,8 @@ import AppKit
 import SwiftUI
 import ServiceManagement
 import ImageIO
+import OSLog
+import Darwin
 
 actor ImageWorker {
     private var cache: [String: CGImage] = [:]
@@ -47,6 +49,8 @@ actor ImageWorker {
     private var generation = UUID()
     private var pendingScan = false
     private let hotKey = HotKey()
+    private let loginPreference = LoginStartupPreference()
+    private let loginLogger = Logger(subsystem: "com.screenshottray.app", category: "Login")
 
     init() {
         if let data = UserDefaults.standard.data(forKey: "shortcut"),
@@ -63,6 +67,7 @@ actor ImageWorker {
         timer = Timer.scheduledTimer(withTimeInterval: 15, repeats: true) { [weak self] _ in
             Task { @MainActor in self?.refresh() }
         }
+        configureDefaultLogin()
     }
 
     func setToggle(_ action: @escaping () -> Void) { hotKey.onToggle = action }
@@ -199,7 +204,36 @@ actor ImageWorker {
             UserDefaults.standard.set(enabled, forKey: "shortcutEnabled")
         } catch { message = error.localizedDescription }
     }
+    private func configureDefaultLogin() {
+        // Foundation's user Applications directory is container-relative under
+        // App Sandbox. The account database supplies the actual user's home.
+        var userHome: URL?
+        if let account = getpwuid(getuid()), let directory = account.pointee.pw_dir {
+            userHome = URL(fileURLWithPath: String(cString: directory), isDirectory: true)
+        }
+        let installed = LoginStartupPreference.isInstalledApplication(
+            at: Bundle.main.bundleURL.resolvingSymlinksInPath(), userHome: userHome)
+        do {
+            let status = SMAppService.mainApp.status
+            try loginPreference.applyDefaultIfNeeded(isInstalled: installed,
+                alreadyRegistered: status == .enabled || status == .requiresApproval) {
+                try SMAppService.mainApp.register()
+            }
+        } catch {
+            message = "Launch at Login could not be enabled automatically: \(error.localizedDescription). You can retry in Settings."
+            loginLogger.error("Automatic login registration failed: \(error.localizedDescription, privacy: .public)")
+        }
+        loginStatus = SMAppService.mainApp.status
+        if installed {
+            loginLogger.info("Installed app login status: \(self.loginStatus.rawValue, privacy: .public)")
+        }
+        if loginStatus == .requiresApproval {
+            message = "Approve Screenshot Tray in System Settings → General → Login Items so it can open when you sign in."
+        }
+    }
+
     func setLogin(_ enabled: Bool) {
+        loginPreference.recordUserChoice()
         do {
             if enabled { try SMAppService.mainApp.register() }
             else { try SMAppService.mainApp.unregister() }

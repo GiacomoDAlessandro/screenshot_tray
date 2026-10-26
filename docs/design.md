@@ -13,3 +13,5 @@ Hold security-scoped access for each folder session; release after outstanding w
 Use Carbon RegisterEventHotKey (no event taps or Accessibility permission). Configurable letter and optional Shift, with Command+Control+Option required; default T. Registration failure is shown and retains the prior registered shortcut. No shortcut can be guaranteed conflict-free with third-party apps.
 
 Deliver an Xcode project, dependency-free core test package, universal ad-hoc signed Release app, build script, README, and manual test checklist. Local app builds do not require paid membership. Ad-hoc signing is not notarization or trusted distribution. Real Spaces, full-screen, login, permission restoration, and cross-app drag behavior require interactive verification.
+
+Version 1.2: [Launch at Login is enabled by default](login-default.md) on first launch from Applications. A persisted once-only marker preserves later app/macOS disable decisions and prevents repeated automatic retries. The user can always change it in Settings; macOS retains approval control.

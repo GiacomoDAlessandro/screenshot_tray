@@ -17,6 +17,9 @@ Environment: macOS 27.0.1, Apple silicon, Xcode 27.1 (27A9275), Swift 6.4, macOS
 - Independent read-only code review found stale thumbnail state for overwrites at the same path. Fixed by placing the version identity on the card at its call site. Metadata overwrite coverage was added; visual replacement behavior remains on the manual checklist.
 - Version 1.1 review identified missing writable-destination validation; added validation before preference updates and verified it with tests that failed first. Documentation now explains legacy shared screenshot/recording destinations instead of promising independent recording destinations on every OS.
 - Updated the existing `/Applications/Screenshot Tray.app` to version 1.1 after keeping the previous installed app in ignored `build/Previous Screenshot Tray.app`. Verified the installed signature and opened the new app. No screenshot destination is changed merely by launching this update.
+- Version 1.2 `swift test`: 22 tests, 0 failures. Seven added tests cover first installed-launch registration, deferring Downloads/development copies, explicit opt-out, existing enabled/approval-pending registration, no repeated automatic retries after failure, remembered choices, and Applications path matching. The initial policy tests failed with four expected assertions; the personal Applications path regression failed before its fix.
+- Version 1.2 independent review caught a sandbox-specific issue: Foundation's user Applications directory resolves inside the app container. A signed sandbox probe confirmed it. The app now uses the account home to find the real personal Applications directory; the probe and path tests passed after the fix.
+- Version 1.2 universal Release build and signature verification passed. Updated and launched `/Applications/Screenshot Tray.app`, retaining version 1.1 in ignored `build/Previous Screenshot Tray 1.1.app`. Native process inspection confirmed version 1.2 is running with accessory activation policy. Its own system log reported SMAppService status `1` (enabled), confirming actual macOS login registration succeeded automatically. No reboot/log out was performed.
 
 The sandbox initially blocked compiler caches and SwiftUI macro compilation; build and test commands succeeded with the required host-tool access. Xcode prints an App Intents metadata extraction notice because this app does not use AppIntents; there are no source compiler warnings in the final Release build.
 
@@ -56,7 +59,8 @@ These are **not claimed as passed**. Use a disposable test folder with generated
 
 ### Login, keyboard, and desktop availability
 
-- [ ] Install in Applications. Enable Launch at Login; approve in macOS Login Items if requested. Log out/in and verify the icon appears without Xcode or Terminal.
+- [ ] On a fresh user profile, install in Applications and open once. Confirm Launch at Login is enabled without toggling it. Approve in macOS Login Items if requested. Log out/in and verify the icon appears without Xcode or Terminal.
+- [ ] Disable Launch at Login in the app, quit, and reopen; it must stay off. Repeat with a disable through System Settings. Test running from Downloads and then moving to local/personal Applications before its first automatic registration.
 - [ ] Disable Launch at Login; log out/in and verify no automatic launch. Check OS-controlled status changes are reflected when reopening settings.
 - [ ] Press default Control + Option + Command + T to show/hide. Configure another letter and optional Shift. Verify the former shortcut stops working and disabled shortcuts do nothing.
 - [ ] Test a conflict with a shortcut you already use. Confirm failure is reported when the OS rejects registration; if a third-party app intercepts it, choose another combination.

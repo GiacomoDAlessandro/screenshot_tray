@@ -108,6 +108,8 @@ struct TrayView: View {
                 Text("Then just take screenshots as usual.").font(.headline)
                 Text("Click the menu bar icon to open, copy, reveal, or drag your saved images. Your folder choice is remembered, so setup is only needed once.")
                     .font(.callout).foregroundStyle(.secondary)
+                Text("Launch at Login is enabled automatically when you first open the app from Applications. You can turn it off in Settings; macOS may require approval.")
+                    .font(.caption).foregroundStyle(.secondary)
                 Text("Clipboard-only screenshots will not appear. Images saved while the app is closed appear when it reopens. You can also add images manually.")
                     .font(.callout).foregroundStyle(.secondary)
                 Button("Show Screenshot Tray") { model.page = .tray; model.refresh() }
@@ -134,7 +136,7 @@ struct TrayView: View {
                     Toggle("Launch at Login", isOn: Binding(get: {
                         model.loginStatus == .enabled || model.loginStatus == .requiresApproval
                     }, set: model.setLogin))
-                    Text("Install in Applications first. macOS manages your login permission.")
+                    Text("Enabled automatically on first launch from Applications. You can turn it off here; your choice is remembered.")
                         .font(.caption).foregroundStyle(.secondary)
                     if model.loginStatus == .requiresApproval {
                         Text("Approval is required in System Settings → General → Login Items.").font(.callout)
@@ -163,7 +165,7 @@ struct TrayView: View {
                 Divider()
                 Label("Local files only. No uploads, accounts, or analytics. Files remain yours in Finder.", systemImage: "lock.shield")
                     .font(.callout).foregroundStyle(.secondary)
-                Text("Screenshot Tray 1.1 · macOS 13 or later").font(.caption2).foregroundStyle(.secondary)
+                Text("Screenshot Tray 1.2 · macOS 13 or later").font(.caption2).foregroundStyle(.secondary)
             }.padding(24)
         }.onAppear { model.refresh() }
     }
