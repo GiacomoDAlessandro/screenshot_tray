@@ -1,0 +1,33 @@
+// !$*UTF8*$!
+{ archiveVersion = 1; classes = {}; objectVersion = 56; objects = {
+F6B4022BA5F1B48CFA400962 = { isa = PBXFileReference; lastKnownFileType = image.icns; path = ScreenshotTray/Resources/AppIcon.icns; sourceTree = SOURCE_ROOT; };
+74C2431FE30C4A47C8443B80 = { isa = PBXBuildFile; fileRef = F6B4022BA5F1B48CFA400962; };
+3169B8C57CA478CA31110CEA = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScreenshotTray/App.swift"; sourceTree = SOURCE_ROOT; };
+30A427F51CB2D36294983679 = { isa = PBXBuildFile; fileRef = 3169B8C57CA478CA31110CEA; };
+CE5FE6D10000E1EB211F8968 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScreenshotTray/Core/DirectoryWatcher.swift"; sourceTree = SOURCE_ROOT; };
+0F41788A78DE071AF72FB409 = { isa = PBXBuildFile; fileRef = CE5FE6D10000E1EB211F8968; };
+3F3D613B1F9B36D1B86529FE = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScreenshotTray/Core/Library.swift"; sourceTree = SOURCE_ROOT; };
+C77360C8FEE208BADD23E6D5 = { isa = PBXBuildFile; fileRef = 3F3D613B1F9B36D1B86529FE; };
+BC90A49C3894AD3C6A30139A = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScreenshotTray/FolderAccess.swift"; sourceTree = SOURCE_ROOT; };
+7E2BB65B792B2F571477C40A = { isa = PBXBuildFile; fileRef = BC90A49C3894AD3C6A30139A; };
+A8A7BC829F7E296E90C6F1D8 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScreenshotTray/HotKey.swift"; sourceTree = SOURCE_ROOT; };
+8CD3EA2AFC482B031175E606 = { isa = PBXBuildFile; fileRef = A8A7BC829F7E296E90C6F1D8; };
+76B2176080D6D42D18ACDC90 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScreenshotTray/TrayModel.swift"; sourceTree = SOURCE_ROOT; };
+0303977A82C455CEA7FA3502 = { isa = PBXBuildFile; fileRef = 76B2176080D6D42D18ACDC90; };
+3C9B75CEFAF0D1794E8A6C72 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScreenshotTray/TrayView.swift"; sourceTree = SOURCE_ROOT; };
+0D47D7613DDAD2477BED244A = { isa = PBXBuildFile; fileRef = 3C9B75CEFAF0D1794E8A6C72; };
+38A007151ABE87CC01A5B6E9 = { isa = PBXFileReference; explicitFileType = wrapper.application; path = "Screenshot Tray.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+FBDC4F23F93125BBEEAE800C = { isa = PBXGroup; children = (38A007151ABE87CC01A5B6E9); name = Products; sourceTree = "<group>"; };
+DC76E9F0C0006E8F919E0C51 = { isa = PBXGroup; children = (F6B4022BA5F1B48CFA400962, 3169B8C57CA478CA31110CEA, CE5FE6D10000E1EB211F8968, 3F3D613B1F9B36D1B86529FE, BC90A49C3894AD3C6A30139A, A8A7BC829F7E296E90C6F1D8, 76B2176080D6D42D18ACDC90, 3C9B75CEFAF0D1794E8A6C72, FBDC4F23F93125BBEEAE800C); sourceTree = "<group>"; };
+BCE16DD0260827ECF338C787 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (30A427F51CB2D36294983679, 0F41788A78DE071AF72FB409, C77360C8FEE208BADD23E6D5, 7E2BB65B792B2F571477C40A, 8CD3EA2AFC482B031175E606, 0303977A82C455CEA7FA3502, 0D47D7613DDAD2477BED244A); runOnlyForDeploymentPostprocessing = 0; };
+7561BFB015D8F536760CB671 = { isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+0189424A5A60FED329FA868E = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (74C2431FE30C4A47C8443B80); runOnlyForDeploymentPostprocessing = 0; };
+89E1FD6268CC0F221A2BE178 = { isa = XCBuildConfiguration; name = Debug; buildSettings = { SDKROOT = macosx; MACOSX_DEPLOYMENT_TARGET = 13.0; SWIFT_VERSION = 5.0; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG; }; };
+E6DE6C99132752C914FEF632 = { isa = XCBuildConfiguration; name = Release; buildSettings = { SDKROOT = macosx; MACOSX_DEPLOYMENT_TARGET = 13.0; SWIFT_VERSION = 5.0; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; SWIFT_OPTIMIZATION_LEVEL = "-O"; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; }; };
+862894B703A6DEDF96A9DD6C = { isa = XCConfigurationList; buildConfigurations = (89E1FD6268CC0F221A2BE178, E6DE6C99132752C914FEF632); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+E9B2E96ABC5F6856F2BE79CF = { isa = XCBuildConfiguration; name = Debug; buildSettings = { PRODUCT_NAME = "Screenshot Tray"; PRODUCT_BUNDLE_IDENTIFIER = com.screenshottray.app; INFOPLIST_FILE = ScreenshotTray/Info.plist; GENERATE_INFOPLIST_FILE = NO; CODE_SIGN_ENTITLEMENTS = ScreenshotTray/ScreenshotTray.entitlements; CODE_SIGN_STYLE = Manual; CODE_SIGN_IDENTITY = "-"; ENABLE_HARDENED_RUNTIME = YES; ENABLE_APP_SANDBOX = YES; SWIFT_EMIT_LOC_STRINGS = NO; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks"; }; };
+5A8C91857F674E16E2724F47 = { isa = XCBuildConfiguration; name = Release; buildSettings = { CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO; PRODUCT_NAME = "Screenshot Tray"; PRODUCT_BUNDLE_IDENTIFIER = com.screenshottray.app; INFOPLIST_FILE = ScreenshotTray/Info.plist; GENERATE_INFOPLIST_FILE = NO; CODE_SIGN_ENTITLEMENTS = ScreenshotTray/ScreenshotTray.entitlements; CODE_SIGN_STYLE = Manual; CODE_SIGN_IDENTITY = "-"; ENABLE_HARDENED_RUNTIME = YES; ENABLE_APP_SANDBOX = YES; SWIFT_EMIT_LOC_STRINGS = NO; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks"; }; };
+F37922C48DA5978D02C9E50E = { isa = XCConfigurationList; buildConfigurations = (E9B2E96ABC5F6856F2BE79CF, 5A8C91857F674E16E2724F47); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+0E8A3AD980EC179856012B7E = { isa = PBXNativeTarget; buildConfigurationList = F37922C48DA5978D02C9E50E; buildPhases = (BCE16DD0260827ECF338C787, 7561BFB015D8F536760CB671, 0189424A5A60FED329FA868E); buildRules = (); dependencies = (); name = ScreenshotTray; productName = "Screenshot Tray"; productReference = 38A007151ABE87CC01A5B6E9; productType = "com.apple.product-type.application"; };
+98F54143AB4E86B28C3AFEE0 = { isa = PBXProject; attributes = { LastUpgradeCheck = 1500; }; buildConfigurationList = 862894B703A6DEDF96A9DD6C; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base); mainGroup = DC76E9F0C0006E8F919E0C51; productRefGroup = FBDC4F23F93125BBEEAE800C; projectDirPath = ""; projectRoot = ""; targets = (0E8A3AD980EC179856012B7E); };
+}; rootObject = 98F54143AB4E86B28C3AFEE0; }
