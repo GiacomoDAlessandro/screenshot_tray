@@ -1,0 +1,6 @@
+# Project-scoped Codex instructions; no changes to the user's Git identity.
+developer_instructions = """
+Whenever you create a new Git commit in this repository, preserve the user's configured Git author and committer identity and end the commit message with exactly one attribution trailer, separated from the body by a blank line:
+Co-authored-by: Codex <noreply@openai.com>
+Preserve other trailers. Apply this to commits created through shell commands and GitHub tools. Do not rewrite existing history solely for attribution. Do not change GitHub credentials, repository permissions, or global Git settings. Do not add attribution to commits made independently by the user.
+"""
