@@ -1,0 +1,28 @@
+SCREENSHOT TRAY — QUICK START
+
+Requires macOS 13 or later. Works on Apple silicon and Intel Macs.
+No Xcode, Terminal, npm, or developer tools are needed to use the app.
+
+1. Drag Screenshot Tray.app onto the Applications shortcut in this disk image.
+2. Open Applications and double-click Screenshot Tray.
+3. Click the stack icon in the menu bar, then Choose Screenshot Folder.
+4. Choose a folder and confirm Set Screenshot Folder. This also changes where
+   your Mac saves future screenshots. Existing files are left where they are.
+
+You can eject this disk image after copying the app.
+Launch at Login enables on first launch from Applications. Turn it off in
+the app's Settings if you prefer; macOS may require Login Items approval.
+
+FIRST-OPEN NOTICE
+
+This early release is locally signed, but does not have an Apple Developer ID
+signature and has not been notarized. macOS may block it or show a warning.
+Only open it if you trust its source. Apple's guidance for trusted apps:
+https://support.apple.com/en-us/102445
+Do not disable Gatekeeper or other system security protections.
+
+Screenshots stay local. No accounts, uploads, analytics, or subscriptions.
+Clipboard-only screenshots do not create files and will not appear in the tray.
+
+Source, instructions, and issues:
+https://github.com/GiacomoDAlessandro/screenshot_tray

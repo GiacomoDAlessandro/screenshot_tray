@@ -2,9 +2,15 @@
 
 A native, local macOS menu bar app for finding and reusing saved screenshots. No server, npm, accounts, uploads, analytics, or screenshot capture service. Built with Swift, SwiftUI, and AppKit, using Apple frameworks only.
 
+**[Download Screenshot Tray for Mac](https://github.com/GiacomoDAlessandro/screenshot_tray/releases/latest/download/Screenshot-Tray.dmg)** · [Release details and ZIP alternative](https://github.com/GiacomoDAlessandro/screenshot_tray/releases/latest)
+
+Requires macOS 13 or later, on Apple silicon or Intel. Open the DMG, drag the app to Applications, then open it and choose a screenshot folder. No developer tools are needed. **This early download is not notarized; macOS may block it or show a security warning.** Read the first-open guidance below before downloading.
+
 ## Install and use the standalone app
 
-The built app is **`dist/Screenshot Tray.app`**. In Finder, open this repository's `dist` folder and drag **Screenshot Tray.app** into **Applications**. Double-click it in Applications. You may close Xcode and Terminal; neither is needed to run the app. The app has a custom icon in Finder and a stack icon in the menu bar, with no Dock icon or main window.
+Download **Screenshot-Tray.dmg** using the link above. Double-click it, drag **Screenshot Tray.app** onto **Applications**, and open the app from Applications. Eject the disk image after copying. Alternatively, unzip **Screenshot-Tray.zip** and drag its app to Applications. Do not use GitHub's “Source code” archives unless you intend to build from source.
+
+For a local source build, the app is **`dist/Screenshot Tray.app`**. Xcode and Terminal can stay closed while using it. The app has a custom icon in Finder and a stack icon in the menu bar, with no Dock icon or main window.
 
 1. Click the menu bar icon, then **Choose Screenshot Folder**. Choose or create a folder and confirm **Set Screenshot Folder**. This sets both the tray's folder and this Mac's screenshot save destination. The choice is remembered; no separate screenshot-toolbar setup is needed.
 2. Take an ordinary Mac screenshot. Click the stack icon, or press **Control + Option + Command + T**, to toggle the tray.
@@ -52,7 +58,19 @@ The Swift package exists for core tests; the runnable app is the Xcode project. 
 
 For **local personal use**, a paid Apple Developer membership is not required. The provided build script signs locally with the ad-hoc identity `-`, including sandbox entitlements. This provides a local code signature, not a verified developer identity or Apple notarization. Xcode can also use your own available signing identity; keep certificates and credentials out of Git. If a replacement build changes signing identity, you may need to select the folder again and re-enable login startup.
 
-For distribution to other Macs, Developer ID signing and Apple notarization normally require paid membership. Neither has been performed. An unsigned or ad-hoc signed **GitHub download** may be quarantined, blocked by Gatekeeper, or fail trust/permission checks on another Mac. A successful local build is not evidence that such a download will open normally. Build from source locally, or obtain a properly signed and notarized release. Do not disable Gatekeeper, SIP, or other system security settings. The original version was pushed to the existing GitHub repository as checkpoint `375af90` before the user-requested setup simplification. No binary release has been uploaded.
+For distribution to other Macs, Developer ID signing and Apple notarization normally require paid membership. Neither has been performed, and no Developer ID identity is available on the build Mac. The downloadable release is **ad-hoc signed and not notarized**. It may be quarantined, blocked by Gatekeeper, or fail trust/permission checks on another Mac. A successful local build is not evidence that a browser-quarantined download will open normally. If you trust the source and macOS cannot verify the developer, read [Apple's first-open guidance](https://support.apple.com/en-us/102445). Do not disable Gatekeeper, SIP, or other system protections. Building locally from source is an alternative. A notarized release would be needed to remove this distribution limitation. No membership has been purchased and no system security settings were changed.
+
+## Package and publish a release
+
+For maintainers, after building the app:
+
+```sh
+bash scripts/package.sh
+```
+
+This produces `dist/Screenshot-Tray.dmg`, `dist/Screenshot-Tray.zip`, and `dist/SHA256SUMS`. The DMG contains only the app, an Applications shortcut, and quick-start instructions. Personal settings and screenshots are never included. Package checksums and code signatures should be verified before publication.
+
+`scripts/publish-release.py` uses the existing Git credential helper, keeps the credential in memory, uploads into a draft, verifies GitHub's reported sizes/SHA-256 digests, and publishes only with `--publish`. It checks any existing version tag matches the exact source commit and rejects unexpected draft assets. It refuses to overwrite an existing published release or change repository visibility/permissions. Run `python3 scripts/publish-release.py --help` for its required version, exact source commit, and release-notes arguments. Source and documentation must be committed and pushed first. Packaging and publishing are separate from running the app. Release validation checks run with `python3 -m unittest discover -s scripts/tests -v`.
 
 ## Privacy and access
 

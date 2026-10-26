@@ -6,6 +6,8 @@ DerivedData/
 *.xcuserstate
 xcuserdata/
 .swiftpm/
+__pycache__/
+*.pyc
 *.p12
 *.mobileprovision
 *.provisionprofile
