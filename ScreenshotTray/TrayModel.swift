@@ -70,23 +70,27 @@ actor ImageWorker {
     func chooseFolder() {
         let panel = NSOpenPanel()
         panel.title = "Choose Screenshot Folder"
-        panel.message = "Choose or create a dedicated folder. This does not change where macOS saves screenshots."
+        panel.message = "Choose or create a folder. Set Screenshot Folder also changes where this Mac saves future screenshots."
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.canCreateDirectories = true
         panel.allowsMultipleSelection = false
-        panel.prompt = "Use Folder"
+        panel.prompt = "Set Screenshot Folder"
         panel.directoryURL = folderURL
         NSApp.activate(ignoringOtherApps: true)
         defer { requestTray?() }
         guard panel.runModal() == .OK, let url = panel.url else { return }
         let candidate = FolderAccess(url)
         do {
-            // Validate access before replacing the working folder or saved bookmark.
+            // Prepare everything that can fail before changing the system preference.
             _ = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
-            try FolderBookmarks.save(url)
+            try ScreenshotFolderValidation.validate(url)
+            let bookmark = try FolderBookmarks.prepare(url)
+            try ScreenshotDestination().setFolder(url)
+            UserDefaults.standard.set(bookmark, forKey: FolderBookmarks.key)
             useFolder(candidate)
-            page = .setup
+            page = .tray
+            message = "All set. New Mac screenshots will save to \(url.lastPathComponent) and appear here."
         } catch { message = "Could not use this folder: \(error.localizedDescription)" }
     }
 

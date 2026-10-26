@@ -10,11 +10,11 @@ final class FolderAccess: @unchecked Sendable {
 
 enum FolderBookmarks {
     static let key = "watchedFolderBookmark"
-    static func save(_ url: URL) throws {
-        let data = try url.bookmarkData(options: [.withSecurityScope, .securityScopeAllowOnlyReadAccess],
-                                        includingResourceValuesForKeys: nil, relativeTo: nil)
-        UserDefaults.standard.set(data, forKey: key)
+    static func prepare(_ url: URL) throws -> Data {
+        try url.bookmarkData(options: [.withSecurityScope],
+                             includingResourceValuesForKeys: nil, relativeTo: nil)
     }
+    static func save(_ url: URL) throws { UserDefaults.standard.set(try prepare(url), forKey: key) }
     static func restore() throws -> FolderAccess? {
         guard let data = UserDefaults.standard.data(forKey: key) else { return nil }
         var stale = false

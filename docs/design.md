@@ -1,8 +1,10 @@
 # Screenshot Tray
 
-The user's supplied brief is the product specification. Implement directly in the supplied empty workspace, with no dependency installs, publishing, screenshot preference changes, or personal data committed.
+The user's original brief is the initial product specification. The later explicit request in [setup-change.md](setup-change.md) supersedes the original prohibition on screenshot preference changes and authorizes GitHub backup. No dependency installs, release uploads, or personal data committed.
 
-Use a native NSStatusItem and transient NSPopover containing SwiftUI. No main window or Dock icon. Settings and setup are pages inside the popover; the folder picker can create folders. macOS 13 is the minimum because Launch at Login uses SMAppService.mainApp (introduced in 13). The app is sandboxed with read-only user-selected files and app-scoped bookmarks, and has no network entitlement.
+Use a native NSStatusItem and transient NSPopover containing SwiftUI. No main window or Dock icon. Settings and setup are pages inside the popover; the folder picker can create folders. macOS 13 is the minimum because Launch at Login uses SMAppService.mainApp (introduced in 13). The app is sandboxed with user-selected files and app-scoped bookmarks, and has no network entitlement. Version 1.1 needs read/write access only to the selected folder to validate its suitability as a save destination; screenshot files are never modified.
+
+Version 1.1: the explicit folder picker confirmation also sets the macOS screenshot file destination. Use a shared-preference sandbox exception only for com.apple.screencapture and CFPreferences, with persistence/readback checks and rollback. Prepare the bookmark before changing preferences; update watched-folder state only on success. Do not apply system changes on launch, automate the screenshot UI, restart menu bar services, or request extra privacy access. Screenshot preference keys are undocumented and runtime behavior on older macOS versions remains a manual check.
 
 Scan direct children only, excluding hidden files, directories, and symbolic links. Accept ImageIO-supported image types independent of filenames. Sort by modification date descending, with deterministic path tie-breaking. Show at most 50, never change files. ImageIO produces downsampled thumbnails on a background worker, with bounded caching and serial decoding. Read failures remain visible and retry on periodic refreshes.
 

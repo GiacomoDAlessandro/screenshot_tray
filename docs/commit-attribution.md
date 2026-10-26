@@ -12,6 +12,8 @@ Co-authored-by: Codex <noreply@openai.com>
 
 The existing user name/email, credentials, repository permissions, global configuration, and previous commits are not changed. This policy is scoped to this repository. New Codex sessions load its project configuration because the repository was already marked trusted. The current session also follows the user's explicit attribution instruction.
 
+Verification: the installed CLI accepted the project config with `codex app-server --strict-config --print-startup-config`. `codex debug prompt-input` confirmed both the project instruction and trailer are in its loaded prompt. Policy commit `93d596f` has the unchanged user author/committer and exactly one parsed Codex co-author trailer; its parent is the unchanged original checkpoint `375af90`. No test-only or rewritten commits were needed.
+
 GitHub recognizes co-author trailers on pushed commits. Listing a co-author as an account/contributor requires the trailer email to be associated with an actual GitHub account and eligible commits on the default branch. Using the standard Codex email does not itself create an account, grant repository access, or guarantee a Contributors avatar. The commit message still contains the explicit credit.
 
 Sources:

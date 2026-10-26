@@ -61,7 +61,7 @@ struct TrayView: View {
             if let error = model.folderError {
                 state(symbol: "folder.badge.questionmark", title: "Folder unavailable", text: error)
             } else if model.folderURL == nil {
-                state(symbol: "folder.badge.plus", title: "Give screenshots a home", text: "Choose a folder to find your screenshots here.")
+                state(symbol: "folder.badge.plus", title: "Give screenshots a home", text: "Choose a folder once. We’ll set it as your Mac’s screenshot save location and show its images here.")
             } else if model.screenshots.isEmpty {
                 state(symbol: "photo.on.rectangle.angled", title: model.scanning ? "Looking for images…" : "Ready for your first screenshot",
                       text: "Save an image in this folder and it will appear here. Clipboard-only screenshots do not create a file.")
@@ -94,31 +94,25 @@ struct TrayView: View {
     private var setup: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
-                Text("A home for your screenshots").font(.title2.weight(.semibold))
-                instruction("1", title: "Choose a dedicated folder", detail: "Choose an existing folder or use New Folder in the native picker. The app remembers your choice.")
+                Image(systemName: "folder.badge.gearshape").font(.system(size: 44, weight: .light)).foregroundStyle(.tint)
+                Text("One folder. You’re ready.").font(.title2.weight(.semibold))
+                Text("Choose where you want your screenshots saved. We’ll update your Mac’s screenshot destination and connect the tray at the same time.")
+                    .font(.body).foregroundStyle(.secondary)
                 Button(model.folderURL == nil ? "Choose Screenshot Folder…" : "Change Screenshot Folder…") { model.chooseFolder() }
                     .buttonStyle(.borderedProminent)
                 if let url = model.folderURL { Text(url.path).font(.caption).foregroundStyle(.secondary).textSelection(.enabled) }
                 if let error = model.folderError { Text(error).font(.callout).foregroundStyle(.orange) }
-                instruction("2", title: "Tell macOS where to save", detail: "Press Command + Shift + 5 → Options → Other Location, then select the same folder.")
-                Label("Choosing a folder here does not change the macOS screenshot destination. Screenshot Tray never changes that preference.", systemImage: "info.circle")
+                Label("Confirming Set Screenshot Folder changes where this Mac saves future screenshots. Your existing files stay where they are.", systemImage: "info.circle")
                     .font(.callout).foregroundStyle(.secondary)
-                instruction("3", title: "Take a screenshot. Open the tray.", detail: "Use the normal Mac screenshot shortcuts. Click the menu bar icon to open, copy, reveal, or drag an original file.")
+                Divider()
+                Text("Then just take screenshots as usual.").font(.headline)
+                Text("Click the menu bar icon to open, copy, reveal, or drag your saved images. Your folder choice is remembered, so setup is only needed once.")
+                    .font(.callout).foregroundStyle(.secondary)
                 Text("Clipboard-only screenshots will not appear. Images saved while the app is closed appear when it reopens. You can also add images manually.")
                     .font(.callout).foregroundStyle(.secondary)
                 Button("Show Screenshot Tray") { model.page = .tray; model.refresh() }
                     .disabled(model.folderURL == nil)
             }.padding(24)
-        }
-    }
-
-    private func instruction(_ number: String, title: String, detail: String) -> some View {
-        HStack(alignment: .top, spacing: 12) {
-            Text(number).font(.headline).frame(width: 26, height: 26).background(Color.accentColor.opacity(0.15), in: Circle())
-            VStack(alignment: .leading, spacing: 6) {
-                Text(title).font(.headline)
-                Text(detail).font(.callout).foregroundStyle(.secondary)
-            }
         }
     }
 
@@ -129,6 +123,7 @@ struct TrayView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Screenshot folder").font(.headline)
                     Text(model.folderURL?.path ?? "No folder selected").font(.caption).foregroundStyle(.secondary).textSelection(.enabled)
+                    Text("Changing this folder also changes where your Mac saves screenshots.").font(.caption).foregroundStyle(.secondary)
                     HStack {
                         Button("Change Folder…") { model.chooseFolder() }
                         Button("Setup Instructions") { model.page = .setup }
@@ -168,7 +163,7 @@ struct TrayView: View {
                 Divider()
                 Label("Local files only. No uploads, accounts, or analytics. Files remain yours in Finder.", systemImage: "lock.shield")
                     .font(.callout).foregroundStyle(.secondary)
-                Text("Screenshot Tray 1.0 · macOS 13 or later").font(.caption2).foregroundStyle(.secondary)
+                Text("Screenshot Tray 1.1 · macOS 13 or later").font(.caption2).foregroundStyle(.secondary)
             }.padding(24)
         }.onAppear { model.refresh() }
     }

@@ -7,7 +7,7 @@
 
 ## Constraints and review focus
 
-Local only; read-only selected folder; no recursive scanning, capture, deletion, network, or preference modifications. Check partial writes, stale work after switching folders, removed/replaced folders, symlinks, and shortcut registration failure.
+Local only; no screenshot file modification, recursive scanning, capture, deletion, or network. The later user-authorized [setup change](setup-change.md) permits explicit screenshot destination preference updates and requires selected-folder writeability validation, superseding the original preference prohibition and read-only grant. Check partial writes, stale work after switching folders, removed/replaced folders, symlinks, and shortcut registration failure.
 
 - [x] Write and run focused filesystem/shortcut tests against initial empty behavior; observe failure.
 - [x] Implement scanning, thumbnail generation, watcher and hotkey validation; pass tests.
